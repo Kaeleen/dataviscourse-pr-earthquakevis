@@ -1,93 +1,122 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title></title>
-<link rel="stylesheet" href="lib/leaflet/leaflet.css"/>
-<script src="lib/leaflet/leaflet.js"></script>
-<script src="lib/d3.v5.js"></script>
-<style>
-#map {
-	width: 800px;
-	height: 600px;
-}
-.fixed_svg {
-	position: absolute;
-	top: 0;
-	left: 0;
-	cursor: move;
-	/*cursor: grab;*/
-}
-.point {
-	fill: #ff7800;
-	fill-opacity: 0.5;
-	stroke: #697e8d;
-	stroke-width: 0;
-	cursor: pointer;
-}
+	<meta charset="UTF-8" />
+	<title>
+		CS6630 Project: Global Earthquake Visualization
+	</title>
+	<link rel="stylesheet" href="lib/leaflet/leaflet.css" />
+	<script src="lib/leaflet/leaflet.js"></script>
+	<script src="lib/d3.v5.js"></script>
+	<style>
+		#map {
+			width: 800px;
+			height: 600px;
+		}
 
-html, body {
-	height: 100%;
-	margin: 0;
-}
-table {
-	border-collapse: collapse;
-}
-tr {
-	height: 30px;
-    font-size: 14px;
-    line-height: 0;
-}
-th {
-	font-weight: 800;
-}
-td {
-    font-weight: normal;
-}
+		.fixed_svg {
+			position: absolute;
+			top: 0;
+			left: 0;
+			cursor: move;
+			/*cursor: grab;*/
+		}
 
-#table_wrapper {
-	width: 800px;
-	margin-top: 30px;
-	display: none;
-}
-#table {
-	width: 706px;
-	margin: 0 auto;
-}
-.YEAR {
-    /*font-weight: 800;*/
-    text-align: left;
-    min-width: 80px;
-}
-.DAMAGE {
-	text-align: center;
-	min-width: 500px;
-}
-.TOTAL_DAMAGE_MILLIONS_DOLLARS {
-	text-align: right;
-	min-width: 80px;
-}
-</style>
+		.point {
+			fill: #ff7800;
+			fill-opacity: 0.5;
+			stroke: #697e8d;
+			stroke-width: 0;
+			cursor: pointer;
+		}
+
+		html, body {
+			height: 100%;
+			margin: 0;
+		}
+
+		table {
+			border-collapse: collapse;
+		}
+
+		tr {
+			height: 30px;
+			font-size: 14px;
+			line-height: 0;
+		}
+
+		th {
+			font-weight: 800;
+		}
+
+		td {
+			font-weight: normal;
+		}
+
+		#table_wrapper {
+			width: 800px;
+			margin-top: 30px;
+			display: none;
+		}
+
+		#table {
+			width: 706px;
+			margin: 0 auto;
+		}
+
+		.YEAR {
+			/*font-weight: 800;*/
+			text-align: left;
+			min-width: 80px;
+		}
+
+		.DAMAGE {
+			text-align: center;
+			min-width: 500px;
+		}
+
+		.TOTAL_DAMAGE_MILLIONS_DOLLARS {
+			text-align: right;
+			min-width: 80px;
+		}
+	</style>
 </head>
 <body>
-<div id="map"></div>
-<div id="table_wrapper">
-	<div id="table"><table>
-		<thead>
-			<tr>
-				<th style="text-align: left; min-width: 80px;">Year</th>
-				<th style="text-align: center; min-width: 500px;"><svg id="headersvg" height="50" width="400"></svg>
-				</th>
-				<th style="text-align: right; min-width: 80px;">Total Damage (M)</th>
-			</tr>
-		</thead>
-		<tbody id="detailTableBody">
-		</tbody>
-	</table></div>
-</div>
-<script src="js/map.js"></script>
-<script src="js/table.js"></script>
-<script type="text/javascript">
+	<h3>CS6630 Project: Global Earthquake Visualization</h3>
+	<address>
+		<span>Name: Yu Song</span>
+		<span>Email: songyu.suzhou@gmail.com / u0857568@utah.edu</span>
+		<span>UID: u0857568</span><br />
+		<span>Name: Kailing Fu</span>
+		<span>Email: u1327581@utah.edu</span>
+		<span>UID: u1327581</span>
+	</address>
+	<br />
+	<hr />
+	<br />
 
-</script>
+	<div id="map"></div>
+	<div id="table_wrapper">
+		<div id="table">
+			<table>
+				<thead>
+					<tr>
+						<th style="text-align: left; min-width: 80px;">Year</th>
+						<th style="text-align: center; min-width: 500px;">
+							<svg id="headersvg" height="50" width="400"></svg>
+						</th>
+						<th style="text-align: right; min-width: 80px;">Total Damage (M)</th>
+					</tr>
+				</thead>
+				<tbody id="detailTableBody">
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<script src="js/map.js"></script>
+	<script src="js/table.js"></script>
+	<script type="text/javascript">
+
+	</script>
 </body>
 </html>

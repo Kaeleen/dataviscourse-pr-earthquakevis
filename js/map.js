@@ -72,7 +72,7 @@ d3.csv("cleanData.csv").then(data => {
 	.attr("r", d => rScale(d.number))
 	.attr("class", "point")
 	.style("fill", d => colorScale(d.magnitude))
-	.on("mouseover", () => d3.select(d3.event.target).style("stroke-width", 1))
+	.on("mouseover", () => d3.select(d3.event.target).style("stroke-width", 3))
 	.on("mouseout", () => d3.select(d3.event.target).style("stroke-width", 0))
 	.on("click", d => {
 		console.log(d);
