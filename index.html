@@ -1,143 +1,93 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title></title>
-	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"/>
-    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
-    <style>
-		html, body {
-			height: 100%;
-			margin: 0;
-		}
-		#map {
-			width: 800px;
-			height: 600px;
-		}
-		.fixed_svg {
-			position: absolute;
-			top: 0;
-			left: 0;
-			cursor: move;
-			/*cursor: grab;*/
-		}
-		.point {
-			fill: #ff7800;
-			fill-opacity: 0.6;
-			stroke: #697e8d;
-			stroke-width: 0.5;
-			cursor: pointer;
-		}
-	</style>
+<title></title>
+<link rel="stylesheet" href="lib/leaflet/leaflet.css"/>
+<script src="lib/leaflet/leaflet.js"></script>
+<script src="lib/d3.v5.js"></script>
+<style>
+#map {
+	width: 800px;
+	height: 600px;
+}
+.fixed_svg {
+	position: absolute;
+	top: 0;
+	left: 0;
+	cursor: move;
+	/*cursor: grab;*/
+}
+.point {
+	fill: #ff7800;
+	fill-opacity: 0.5;
+	stroke: #697e8d;
+	stroke-width: 0;
+	cursor: pointer;
+}
+
+html, body {
+	height: 100%;
+	margin: 0;
+}
+table {
+	border-collapse: collapse;
+}
+tr {
+	height: 30px;
+    font-size: 14px;
+    line-height: 0;
+}
+th {
+	font-weight: 800;
+}
+td {
+    font-weight: normal;
+}
+
+#table_wrapper {
+	width: 800px;
+	margin-top: 30px;
+	display: none;
+}
+#table {
+	width: 706px;
+	margin: 0 auto;
+}
+.YEAR {
+    /*font-weight: 800;*/
+    text-align: left;
+    min-width: 80px;
+}
+.DAMAGE {
+	text-align: center;
+	min-width: 500px;
+}
+.TOTAL_DAMAGE_MILLIONS_DOLLARS {
+	text-align: right;
+	min-width: 80px;
+}
+</style>
 </head>
 <body>
 <div id="map"></div>
-<script src="http://d3js.org/d3.v5.js"></script>
-<script src="js/worldmap.js"></script>
+<div id="table_wrapper">
+	<div id="table"><table>
+		<thead>
+			<tr>
+				<th style="text-align: left; min-width: 80px;">Year</th>
+				<th style="text-align: center; min-width: 500px;"><svg id="headersvg" height="50" width="400"></svg>
+				</th>
+				<th style="text-align: right; min-width: 80px;">Total Damage (M)</th>
+			</tr>
+		</thead>
+		<tbody id="detailTableBody">
+		</tbody>
+	</table></div>
+</div>
+<script src="js/map.js"></script>
+<script src="js/table.js"></script>
 <script type="text/javascript">
-var map = L.map("map").setView([40, 0], 1);
 
-L.tileLayer("https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw", {
-	maxZoom: 18,
-	minZoom: 1,
-	attributionControl: false,
-	id: 'mapbox/light-v9',
-	maxBounds: L.latLngBounds(L.latLng(87.12, 281.26), L.latLng(-87.12, -281.26))
-}).addTo(map);
-//L.geoJSON(geojsonFeature).addTo(map);
-
-var svg = d3.select(map.getPanes().overlayPane)
-.append("svg")
-.attr("height", document.getElementById("map").clientHeight)
-.attr("width", document.getElementById("map").clientWidth)
-.attr("class", "fixed_svg")
-.style("border", "solid 1px #000")
-.append("g")
-//.attr("class", "leaflet-zoom-hide");
-
-var rScale = d3.scaleLog()
-.domain([1, 465])
-.range([3, 6])
-
-d3.csv("data/cleanData.csv").then(data => {
-	let groupData = d3.nest().key(d => d.COUNTRY).entries(data);
-	//console.log(groupData);
-
-	for (item of groupData) {
-		item.country = item.key;
-		item.lng = +item.values[0].LONGITUDE;
-		item.lat = +item.values[0].LATITUDE;
-		item.number = item.values.length;
-		item.detail = item.values;
-		item.detail.sort((a,b) => {
-			return (+b.EQ_PRIMARY) - (+a.EQ_PRIMARY);
-		})
-
-		delete item.key;
-		delete item.values;
-		//console.log(item);
-	};
-
-	groupData.sort((a,b) => {
-		return b.number - a.number;
-	})
-	console.log(groupData);
-
-	var transform = d3.geoTransform({point: projectPoint}),
-	path = d3.geoPath().projection(transform);
-
-	var circles = svg.selectAll("circle")
-	.data(groupData)
-	.enter()
-	.append("circle")
-	.each(d => {
-		//console.log(d);
-		let point = map.latLngToLayerPoint([d.lat, d.lng]);
-		d.x = point.x;
-		d.y = point.y;
-	})
-	.attr("cx", d => d.x)
-	.attr("cy", d => d.y)
-	.attr("r", d => rScale(d.number))
-	.attr("class", "point")
-	.on("mouseover", () => d3.select(d3.event.target).style("stroke-width", 1.5))
-	.on("mouseout", () => d3.select(d3.event.target).style("stroke-width", 0.5));
-
-	map.on("zoomend", reset);
-	map.on("move", moveview);
-  	reset();
-
-  	function moveview() {
-  		var panes = document.getElementsByClassName('leaflet-pane leaflet-map-pane')[0];
-	    var transform = panes.style.transform.slice(12, -1);
-	    var offsetX = +transform.split(",")[0].replace("px", ""),
-	        offsetY = +transform.split(",")[1].replace("px", "")
-	    //console.log(offsetX, offsetY);
-	    var fixed_svg = document.getElementsByClassName("fixed_svg")[0];
-	    fixed_svg.style.left = -offsetX + "px";
-	    fixed_svg.style.top = -offsetY + "px";
-	    svg.attr("transform", "translate(" + offsetX + "," + offsetY + ")");
-  	}
-
-  	function reset() {
-  		//console.log("reset", map.getBounds());
-		circles.each(d => {
-			let point = map.latLngToLayerPoint([d.lat, d.lng]);
-			d.x = point.x;
-			d.y = point.y;
-			//console.log(d);
-		})
-		.transition()
-		.duration(100)
-		.attr("cx", d => d.x)
-		.attr("cy", d => d.y)
-	}
-
-	function projectPoint(x, y) {
-		var point = map.latLngToLayerPoint(new L.LatLng(y, x));
-		this.stream.point(point.x, point.y);
-	}
-
-})
 </script>
 </body>
 </html>
