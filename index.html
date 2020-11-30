@@ -6,11 +6,25 @@
 <script src="lib/leaflet/leaflet.js"></script>
 <script src="lib/d3.v5.js"></script>
 <style>
-input {
+.myTooltip{
+    font-size:14px;
+    width:auto;
+    height:auto;
+    line-height: 24px;
+    position:absolute;
+    padding: 5px 15px;
+    background: rgba(255,255,255,0.8);
+    box-shadow: 0 0 15px rgba(0,0,0,0.2);
+    border-radius: 5px;
+    box-shadow: 0px 0px 6px #ccc;
+    z-index: 2000;
+}
+
+.input {
 	width: 100px;
 }
 #map {
-	width: 800px;
+	width: 1200px;
 	height: 600px;
 }
 .fixed_svg {
@@ -27,22 +41,21 @@ input {
 	stroke-width: 0.2;
 	cursor: pointer;
 }
-#infobox {
-	width: 200px;
-    height: 300px;
+.info {
+	padding: 8px 10px;
+    font: 14px/16px Arial, Helvetica, sans-serif;
+    background: rgba(255,255,255,0.65);
+    box-shadow: 0 0 15px rgba(0,0,0,0.2);
     border-radius: 5px;
-    border: solid 1px #666;
-    position: absolute;
-    left: 820px;
-    top: 68px;
-    padding: 20px;
-    line-height: 32px;
+    line-height: 24px;
 }
 
-html, body {
-	height: 100%;
-	margin: 0;
+#groupview {
+	/*height: 400px;
+	width: 1200px;*/
+	margin-top: 20px;
 }
+
 table {
 	border-collapse: collapse;
 }
@@ -85,17 +98,20 @@ td {
 <body>
 <div>
 	Year:&nbsp
-	<input id=sel-year-start type="text" />
-	<input id=sel-year-end type="text" />
+	<input id="sel-year-start" class="input" type="text" />
+	<input id="sel-year-end" class="input" type="text" />
 </div>
 <div>
 	EQ-Primary:&nbsp
-	<input id=sel-eqprimary-start type="text" />
-	<input id=sel-eqprimary-end type="text" />
+	<input id="sel-eqprimary-start" class="input" type="text" />
+	<input id="sel-eqprimary-end" class="input" type="text" />
+	<button id="sel-btn">Select</button>
+	<button id="clear-btn">Clear</button>
+	Tsunami<input id="sel-tsunami" type="checkbox"/>
 </div>
-<button id="sel-btn">Select</button>
 <div id="map"></div>
-<div id="infobox"></div>
+<div id="groupview"></div>
+<div id="itemview"></div>
 <!-- <div id="table_wrapper">
 	<div id="table"><table>
 		<thead>
@@ -110,10 +126,62 @@ td {
 		</tbody>
 	</table></div>
 </div> -->
-<script src="js/map.js"></script>
-<script src="js/table.js"></script>
+
 <script type="text/javascript">
+var svg1 = d3.select("#groupview")
+.append("svg")
+.attr("height", 400)
+.attr("width", 600)
+//.style("border", "solid 1px #000");
+
+var svg2 = d3.select("#groupview")
+.append("svg")
+.attr("height", 400)
+.attr("width", 600)
+//.style("border", "solid 1px #000");
+
+var svg3 = d3.select("#itemview")
+.append("svg")
+.attr("height", 200)
+.attr("width", 200)
+//.style("border", "solid 1px #000");
+
+var svg4 = d3.select("#itemview")
+.append("svg")
+.attr("height", 200)
+.attr("width", 200)
+//.style("border", "solid 1px #000");
+
+var svg5 = d3.select("#itemview")
+.append("svg")
+.attr("height", 200)
+.attr("width", 200)
+//.style("border", "solid 1px #000");
+
+var svg6 = d3.select("#itemview")
+.append("svg")
+.attr("height", 200)
+.attr("width", 200)
+//.style("border", "solid 1px #000");
+
+var svg7 = d3.select("#itemview")
+.append("svg")
+.attr("height", 200)
+.attr("width", 200)
+//.style("border", "solid 1px #000");
+
+var svg8 = d3.select("#itemview")
+.append("svg")
+.attr("height", 200)
+.attr("width", 200)
+//.style("border", "solid 1px #000");
 
 </script>
+<script src="js/map.js"></script>
+<script src="js/barchart.js"></script>
+<script src="js/linechart.js"></script>
+<script src="js/itembarchart.js"></script>
+<script src="js/table.js"></script>
+
 </body>
 </html>
