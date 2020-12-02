@@ -20,9 +20,9 @@ How to Run :-
 
 =============
 
-cd dataviscourse-pr-earthquakevis/ 
-python -m http.server
-In Google Chrome browser, navigate to http://localhost:8000/
+cd dataviscourse-pr-earthquakevis/  
+python -m http.server  
+In Google Chrome browser, navigate to http://localhost:8000/  
 
-Link to process book: https://github.com/Kaeleen/dataviscourse-pr-earthquakevis/blob/main/ProcessBook.pdf
-Link to video demo: https://www.youtube.com/watch?v=Chm9k_2M8nM&feature=youtu.be
+Link to process book: https://github.com/Kaeleen/dataviscourse-pr-earthquakevis/blob/main/ProcessBook.pdf  
+Link to video demo: https://www.youtube.com/watch?v=Chm9k_2M8nM&feature=youtu.be  
