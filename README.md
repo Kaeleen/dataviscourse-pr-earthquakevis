@@ -1,14 +1,14 @@
 Directory Structure :
 =====================
 
-credit-operations/
-    design/
-    index.html
-    js/
-    lib/
-    cleanData.csv
-    ProcessBook.pdf
-    PeerReview.pdf
+credit-operations/  
+    design/  
+    index.html  
+    js/  
+    lib/  
+    cleanData.csv  
+    ProcessBook.pdf  
+    PeerReview.pdf  
 
 1. In our project directory setup, all the data used is in cleanData.csv file.
 2. Javascript libraries used by us is present in lib directory.
