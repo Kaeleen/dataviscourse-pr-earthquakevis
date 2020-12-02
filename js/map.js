@@ -27,9 +27,31 @@ info.update = function(infotext) {
 	this._div.innerHTML = infotext ? infotext : "Click a circle";
 }
 
-var legend
-
 info.addTo(map);
+
+var legend = L.control({position: 'topright'});
+
+legend.onAdd = function (map) {
+
+	var div = L.DomUtil.create('div', 'info legend'),
+		grades = [0, 3, 4.5, 6],
+		labels = [],
+		from, to;
+
+	for (var i = 0; i < grades.length; i++) {
+		from = grades[i];
+		to = grades[i + 1];
+
+		labels.push(
+			'<i style="background:' + getColor(from + 1) + '"></i> ' +
+			from + (to ? '&ndash;' + to : '+'));
+	}
+
+	div.innerHTML = labels.join('<br>');
+	return div;
+};
+
+legend.addTo(map);
 
 var svg = d3.select(map.getPanes().overlayPane)
 .append("svg")
@@ -48,6 +70,13 @@ var colors = ["#ffc4a3", "#ff9a76", "#ff9a76", "#bb596b"];
 var colorScale = d3.scaleQuantile()
     .domain([0, 3, 4.5, 6, 10])
     .range(colors);
+
+function getColor(d) {
+	return d > 6 ? '#bb596b' :
+		d > 4.5  ? '#ff9a76' :
+		d > 3  ? '#ff9a76' : '#ffc4a3';
+}
+
 
 d3.csv("cleanData.csv").then(rawdata => {
 	//console.log(rawdata);
@@ -84,10 +113,13 @@ d3.csv("cleanData.csv").then(rawdata => {
 	}
 
 	document.getElementById("sel-btn").onclick = function() {
+		info.update();
 		filter(rawdata);
 	};
 
 	document.getElementById("clear-btn").onclick = function() {
+		info.update();
+
 		document.getElementById("sel-year-start").value = "";
 		document.getElementById("sel-year-end").value = "";
 		document.getElementById("sel-eqprimary-start").value = "";
@@ -105,6 +137,10 @@ d3.csv("cleanData.csv").then(rawdata => {
 		drawItemBarChart("TOTAL_HOUSES_DAMAGED", rawdata);
 	}
 
+	map.on("click", function(e) {
+		info.update();
+		circles.style("stroke-width", 0);
+	})
 
 	map.on("move", moveview);
 
@@ -203,7 +239,7 @@ function drawCircle(data) {
 		d.COUNTRY = name;
 	})
 	.on("mouseover", d => {
-		d3.select(d3.event.target).style("stroke-width", 1);
+		//d3.select(d3.event.target).style("stroke-width", 1);
 
 		tooltip.html("Country: " + d.COUNTRY + "</br>Magnitude: " + (d.EQ_PRIMARY ? d.EQ_PRIMARY : "N/A"));
         tooltip.style("visibility", "visible");
@@ -212,12 +248,16 @@ function drawCircle(data) {
 		tooltip.style("top",(d3.event.pageY-10)+"px").style("left",(d3.event.pageX + 10)+"px");
 	})
 	.on("mouseout", () => {
-		d3.select(d3.event.target).style("stroke-width", 0);
+		//d3.select(d3.event.target).style("stroke-width", 0);
 
 		tooltip.style("visibility", "hidden");
 	})
 	.on("click", d => {
+
+		d3.event.stopPropagation();
 		//console.log(d);
+		circles.style("stroke-width", 0);
+		d3.select(d3.event.target).style("stroke-width", 2);
 
 		let textstr = "Country: " + d.COUNTRY
 			+ "</br>Longitude: " + d.LONGITUDE

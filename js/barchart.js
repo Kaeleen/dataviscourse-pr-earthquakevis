@@ -105,10 +105,11 @@ function drawBarChart(data) {
 	.text(d => d.key)
 
 	svg1.append("text")
-	.attr("x", 0)
+	.attr("x", 300)
 	.attr("y", 25)
 	.style("font-size", 16)
 	.style("font-weight", 500)
 	.style("font-style", "italic")
+	.style("text-anchor", "middle")
 	.text("Top 10 Countries with Most Earthquakes")
 }

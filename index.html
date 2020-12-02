@@ -36,9 +36,9 @@
 }
 .point {
 	fill: #ff7800;
-	opacity: 0.8;
-	stroke: #666;
-	stroke-width: 0.2;
+	opacity: 0.75;
+	stroke: #333;
+	stroke-width: 0;
 	cursor: pointer;
 }
 .info {
@@ -48,6 +48,12 @@
     box-shadow: 0 0 15px rgba(0,0,0,0.2);
     border-radius: 5px;
     line-height: 24px;
+}
+.legend i {
+    width: 18px;
+    height: 18px;
+    float: left;
+    margin-right: 8px;
 }
 
 #groupview {
@@ -96,24 +102,30 @@ td {
 </style>
 </head>
 <body>
-<div>
-	Year:&nbsp
-	From&nbsp<input id="sel-year-start" class="input" type="text" placeholder="1700" />
-	To&nbsp<input id="sel-year-end" class="input" type="text" placeholder="2020" />
+<div style="width: 1200px; margin: auto; line-height: 30px;">
+	<div style="text-align: center; line-height: 56px; font-size: 24px; font-weight: 600;">Global Earthquake Visualization</div>
+	<div style="text-align: center; line-height: 30px;">Kailing Fu/Yu Song</div>
+	<div style="text-align: center; line-height: 24px; font-style: italic;">Video:&nbsp<a href="https://www.youtube.com/watch?v=Chm9k_2M8nM&feature=youtu.be">Screen-cast Demo</a></div>
+	<div style="margin-top: 50px;">
+		Year:&nbsp
+		From&nbsp<input id="sel-year-start" class="input" type="text" placeholder="1700" />
+		To&nbsp<input id="sel-year-end" class="input" type="text" placeholder="2020" />
+	</div>
+	<div style="width: 1200px;">
+		EQ-Primary:&nbsp
+		From&nbsp<input id="sel-eqprimary-start" class="input" type="text" placeholder="1" />
+		To&nbsp<input id="sel-eqprimary-end" class="input" type="text" placeholder="10" />
+		<button id="sel-btn">Select</button>
+		<button id="clear-btn">Clear</button>
+		<span style="position: absolute; margin-top: 0px; margin-left: 616px;">
+			Tsunami<input id="sel-tsunami" type="checkbox"/>
+		</span>
+	</div>
+	<div id="map" style="margin-top: 10px;"></div>
+	<div id="groupview"></div>
+	<div id="itemview"></div>	
 </div>
-<div style="width: 1200px;">
-	EQ-Primary:&nbsp
-	From&nbsp<input id="sel-eqprimary-start" class="input" type="text" placeholder="1" />
-	To&nbsp<input id="sel-eqprimary-end" class="input" type="text" placeholder="10" />
-	<button id="sel-btn">Select</button>
-	<button id="clear-btn">Clear</button>
-	<span style="position: absolute; margin-top: 0px; margin-left: 616px;">
-		Tsunami<input id="sel-tsunami" type="checkbox"/>
-	</span>
-</div>
-<div id="map" style="margin-top: 10px;"></div>
-<div id="groupview"></div>
-<div id="itemview"></div>
+
 <!-- <div id="table_wrapper">
 	<div id="table"><table>
 		<thead>
