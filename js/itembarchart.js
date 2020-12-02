@@ -1,5 +1,4 @@
 function drawItemBarChart(dim, data) {	
-	//console.log("drawluna")
 	let svg_number;
 
 	switch (dim) 
@@ -29,9 +28,9 @@ function drawItemBarChart(dim, data) {
 
 	let svg_dom = d3.select("#itemview").selectAll("svg")._groups[0][svg_number];
 	let svg = d3.select(svg_dom);
-	//console.log(svg);
 	
 	svg.selectAll("g").remove();
+	svg.selectAll("text").remove();
 
 	data.sort((a,b) => {
 		return (+b[dim]) - (+a[dim]);
@@ -43,11 +42,10 @@ function drawItemBarChart(dim, data) {
 	} else {
 		topdata = data;
 	}
-	console.log(dim, topdata, data);
+	//console.log(dim, topdata);
 
 	let max = +topdata[0][dim];
 	let min = +topdata[topdata.length-1][dim];
-	console.log(dim, min, max)
 
 	let heightScale = d3.scaleLinear()
 	.domain([min, max])
@@ -83,11 +81,35 @@ function drawItemBarChart(dim, data) {
 
 		tooltip.style("visibility", "hidden");
 	})
-	.on("click", g => {
+	.on("click", function(g) {
+		svg1.selectAll("rect")
+		.style("fill", "lightblue");
+
+		svg2.selectAll("circle")
+		.style("fill", "lightblue");
+
+		d3.select("#itemview").selectAll("rect")
+		.style("fill", "lightblue");
+
+		d3.select(this).style("fill", "orange");
+
 		circles
 		.transition()
 		.duration(400)
-		.style("opacity", d => (g.I_D == d.I_D) ? 1 : 0);
+		.style("opacity", d => {
+			if (g.I_D == d.I_D) {
+				return 1;
+			} else {
+				return 0.2;
+			}
+		});
+
+		let selection = circles.filter(d => d.I_D == g.I_D);
+		let firstcircle = selection._groups[0][0];
+
+		d3.select(firstcircle).each(d => {
+			map.panTo([+d.LATITUDE, +d.LONGITUDE]);
+		});
 	});
 	
 	update
@@ -100,7 +122,7 @@ function drawItemBarChart(dim, data) {
 
 	svg.append("text")
 	.attr("x", 0)
-	.attr("y", 20)
+	.attr("y", 40)
 	.style("font-size", 13)
 	.style("font-weight", 500)
 	.style("font-style", "italic")

@@ -50,10 +50,7 @@ var colorScale = d3.scaleQuantile()
     .range(colors);
 
 d3.csv("cleanData.csv").then(rawdata => {
-	console.log(rawdata);
-
-	// var transform = d3.geoTransform({point: projectPoint}),
-	// path = d3.geoPath().projection(transform);
+	//console.log(rawdata);
 
 	drawCircle(rawdata);
 	drawBarChart(rawdata);
@@ -67,21 +64,19 @@ d3.csv("cleanData.csv").then(rawdata => {
 	drawItemBarChart("TOTAL_HOUSES_DAMAGED", rawdata);
 
 	document.getElementById("sel-tsunami").onclick = function() {
-		console.log(this.id, this.checked);
+		//console.log(this.id, this.checked);
 
 		circles
 		.transition()
 		.duration(200)
 		.attr("r", d => {
 			if (this.checked) {
-				//console.log(map.getZoom());
 				if (d.FLAG_TSUNAMI != "") {
 					return map.getZoom();
 				} else {
 					return 0;
 				}
 			} else {
-				//console.log(map.getZoom());
 				return map.getZoom();
 			}
 			this.checked ? map.getZoom() : 0
@@ -118,7 +113,6 @@ d3.csv("cleanData.csv").then(rawdata => {
 			let point = map.latLngToLayerPoint([d.LATITUDE, d.LONGITUDE]);
 			d.x = point.x;
 			d.y = point.y;
-			//console.log(d);
 		})
 		.transition()
 		.duration(100)
@@ -126,24 +120,17 @@ d3.csv("cleanData.csv").then(rawdata => {
 		.attr("cy", d => d.y)
 		.attr("r", d => {
 			if (document.getElementById("sel-tsunami").checked) {
-				//console.log(map.getZoom());
 				if (d.FLAG_TSUNAMI != "") {
 					return map.getZoom();
 				} else {
 					return 0;
 				}
 			} else {
-				//console.log(map.getZoom());
 				return map.getZoom();
 			}
 			this.checked ? map.getZoom() : 0
 		});
 	});
-
-	/*function projectPoint(x, y) {
-		var point = map.latLngToLayerPoint(new L.LatLng(y, x));
-		this.stream.point(point.x, point.y);
-	}*/
 })
 
 function filter(rawdata) {
@@ -200,7 +187,6 @@ function drawCircle(data) {
 	.enter()
 	.append("circle")
 	.each(d => {
-		//console.log(d);
 		let point = map.latLngToLayerPoint([d.LATITUDE, d.LONGITUDE]);
 		d.x = point.x;
 		d.y = point.y;
@@ -231,7 +217,7 @@ function drawCircle(data) {
 		tooltip.style("visibility", "hidden");
 	})
 	.on("click", d => {
-		console.log(d);
+		//console.log(d);
 
 		let textstr = "Country: " + d.COUNTRY
 			+ "</br>Longitude: " + d.LONGITUDE
@@ -257,6 +243,7 @@ function moveview() {
     var offsetX = +transform.split(",")[0].replace("px", ""),
         offsetY = +transform.split(",")[1].replace("px", "")
     //console.log(offsetX, offsetY);
+
     var fixed_svg = document.getElementsByClassName("fixed_svg")[0];
     fixed_svg.style.left = -offsetX + "px";
     fixed_svg.style.top = -offsetY + "px";

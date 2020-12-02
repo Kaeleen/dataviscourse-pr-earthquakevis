@@ -53,7 +53,7 @@
 #groupview {
 	/*height: 400px;
 	width: 1200px;*/
-	margin-top: 20px;
+	margin-top: 40px;
 }
 
 table {
@@ -98,18 +98,20 @@ td {
 <body>
 <div>
 	Year:&nbsp
-	<input id="sel-year-start" class="input" type="text" />
-	<input id="sel-year-end" class="input" type="text" />
+	From&nbsp<input id="sel-year-start" class="input" type="text" placeholder="1700" />
+	To&nbsp<input id="sel-year-end" class="input" type="text" placeholder="2020" />
 </div>
-<div>
+<div style="width: 1200px;">
 	EQ-Primary:&nbsp
-	<input id="sel-eqprimary-start" class="input" type="text" />
-	<input id="sel-eqprimary-end" class="input" type="text" />
+	From&nbsp<input id="sel-eqprimary-start" class="input" type="text" placeholder="1" />
+	To&nbsp<input id="sel-eqprimary-end" class="input" type="text" placeholder="10" />
 	<button id="sel-btn">Select</button>
 	<button id="clear-btn">Clear</button>
-	Tsunami<input id="sel-tsunami" type="checkbox"/>
+	<span style="position: absolute; margin-top: 0px; margin-left: 616px;">
+		Tsunami<input id="sel-tsunami" type="checkbox"/>
+	</span>
 </div>
-<div id="map"></div>
+<div id="map" style="margin-top: 10px;"></div>
 <div id="groupview"></div>
 <div id="itemview"></div>
 <!-- <div id="table_wrapper">
