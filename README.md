@@ -1,6 +1,5 @@
-Directory Structure:
-
-===================
+Directory Structure :
+=====================
 
 dataviscourse-pr-earthquakevis/
 	design/
@@ -16,8 +15,13 @@ dataviscourse-pr-earthquakevis/
 3. ProcessBook.pdf presents the design process document.
 4. PeerReview.pdf presents the comments on the project of other team.
 
-How to Run :-
+Project URL :-
+==============
 
+https://kaeleen.github.io/dataviscourse-pr-earthquakevis/
+
+
+How to Run :-
 =============
 
 cd dataviscourse-pr-earthquakevis/  
