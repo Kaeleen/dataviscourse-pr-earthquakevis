@@ -2,7 +2,7 @@ Directory Structure :
 =====================
 
 credit-operations/  
-    >design/  
+	design/  
     index.html  
     js/  
     lib/  
