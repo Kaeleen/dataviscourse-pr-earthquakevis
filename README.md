@@ -1,14 +1,14 @@
 Directory Structure :
 =====================
 
-dataviscourse-pr-earthquakevis/
-	design/
-	js/
-	lib/
-	cleanData.csv
-	ProcesBook.pdf
-	Peer Review.pdf
-	index.html
+dataviscourse-pr-earthquakevis/  
+	design/  
+	js/  
+	lib/  
+	cleanData.csv  
+	ProcesBook.pdf  
+	Peer Review.pdf  
+	index.html  
 
 1. In our project directory setup, all the data used is in cleanData.csv file.
 2. Javascript libraries used by us is present in lib directory.
